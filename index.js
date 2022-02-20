@@ -78,4 +78,67 @@ function appMenu() {
             createTeam();
         });
     }
+    
+    function createTeam() {
+
+        inquirer.prompt([
+            {
+                type: "list",
+                name: "memberChoice",
+                messages: "Which type of team member would you like to add?",
+                choices: [
+                    "Engineer",
+                    "Intern",
+                    "I don't want to add any more team members"
+                ]
+            }
+        ]).then(userChoice => {
+            switch (userChoice.memberChoice) {
+                case "Engineer":
+                    addEngineer();
+                    break;
+                case "Intern":
+                    addIntern();
+                    break;
+                default:
+                    buildTeam();
+            }
+        });
+    }
+
+    function addEngineer() {
+        inquirer.prompt([
+            {
+                type: "input",
+                name: "engineerName",
+                message: "What is your engineer's name?",
+                validate: answer => {
+                    if (answer !== "") {
+                        return true;
+                    }
+                    return "Please enter at least one character.";
+                }
+            },
+            {
+                type: "input",
+                name: "engineerId",
+                message: "What is your engineer's id?",
+                validate: answer => {
+                    const pass = answer.match(
+                        /^[1-9]\d*$/
+                    );
+                    if (pass) {
+                        if (idArray.includes(answer)) {
+                            return "This ID is already taken. Please enter a different number.";
+                        }   else {
+                            return true;
+                        }
+
+                    }
+                    return "Please enter a positive number greater than zero.";
+                }
+            },
+            {}
+        ])
+    }
 }
