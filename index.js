@@ -8,7 +8,7 @@ const fs = require("fs");
 const OUTPUT_DIR = path.resolve(__dirname, "output");
 const outputPath = path.join(OUTPUT_DIR, "team.html");
 
-const render = require("./src/page-template.js");
+const render = require("./src/page-template");
 
 const teamMembers = [];
 const idArray = [];
@@ -89,7 +89,7 @@ function appMenu() {
                 choices: [
                     "Engineer",
                     "Intern",
-                    "I don't want to add any more team members"
+                    "Finish"
                 ]
             }
         ]).then(userChoice => {
@@ -237,8 +237,7 @@ function appMenu() {
     }
 
     function buildTeam() {
-        // Output directy if output path doesn't exist
-        if (!fs.existsSync(OUTOUT_DIR)) {
+        if (!fs.existsSync(OUTPUT_DIR)) {
             fs.mkdirSync(OUTPUT_DIR)
         }
         fs.writeFileSync(outputPath, render(teamMembers), "utf-8");
